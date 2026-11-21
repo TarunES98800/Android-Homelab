@@ -171,7 +171,7 @@ openjdk version "25..."
 
 The exact patch version can change as updates are released.
 
-![Java version and architecture](../../images/termux/java-version.jpg)
+![Java version and architecture](../../images/termux/java-version.jpeg)
 
 ### Why do we need Java?
 
