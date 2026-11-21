@@ -169,7 +169,8 @@ openjdk version "25..."
 ```
 
 The exact patch version can change as updates are released.
-
+```markdown
+![Java version and architecture](../../images/termux/java-version.jpg)
 ### Why do we need Java?
 
 PaperMC is distributed as an executable Java archive.
