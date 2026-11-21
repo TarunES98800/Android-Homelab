@@ -1,0 +1,45 @@
+# Android-Homelab: local server data
+# Do not commit live worlds, player files, logs, or server configuration.
+
+# Minecraft world and runtime data
+**/world/
+**/world_nether/
+**/world_the_end/
+**/logs/
+**/crash-reports/
+**/plugins/
+**/eula.txt
+**/server.properties
+**/whitelist.json
+**/ops.json
+**/banned-players.json
+**/banned-ips.json
+**/usercache.json
+
+# Downloaded server and plugin binaries
+*.jar
+
+# Archives and local backups
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.bak
+
+# Logs and temporary files
+*.log
+*.tmp
+*.part
+
+# Local secrets and private keys
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa
+id_ed25519
+
+# Operating-system and editor files
+.DS_Store
+Thumbs.db
