@@ -440,7 +440,7 @@ This command tests TCP connectivity. It does not verify Minecraft authentication
 
 The following screenshot demonstrates a successful TCP connectivity test from a remote Windows device to the Android homelab server through Tailscale.
 
-![Successful Tailscale TCP connection test](../images/networking/tailscale-connection-test.png)
+![Successful Tailscale TCP connection test](../images/networking/tailscale-connection-result.png)
 
 The `TcpTestSucceeded` result confirms that the remote device could establish a TCP connection to the Minecraft server port.
 
