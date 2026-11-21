@@ -63,7 +63,7 @@ The first implementation uses a Redmi Note 8 Pro.
 These specifications describe the initial test device, not minimum requirements for every application.
 
 ## 📚 Documentation
-
+- [System Architecture](docs/architecture.md)
 Follow the tutorials in the suggested order.
 
 ### Getting Started
