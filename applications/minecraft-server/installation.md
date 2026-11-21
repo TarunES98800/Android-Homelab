@@ -436,15 +436,32 @@ PaperMC documentation:
 
 https://docs.papermc.io/misc/downloads-service/
 
+
 ## 10. First Server Startup
 
-Now that Java and PaperMC are installed, we can attempt to start the server.
+Now that Java and PaperMC are installed, we can perform the first server startup.
 
-Make sure the current directory is:
+Before executing the command, make sure you are inside the Minecraft server directory.
 
-```text
-~/minecraft
+### Step 1: Navigate to the server directory
+
+Execute this command in the Termux shell:
+
+```bash
+cd ~/minecraft
 ```
+
+### Step 2: Verify the PaperMC JAR
+
+Execute:
+
+```bash
+ls -lh paper.jar
+```
+
+Make sure that the downloaded server file exists.
+
+### Step 3: Start PaperMC
 
 Execute:
 
@@ -454,26 +471,73 @@ java -Xms512M -Xmx2G -jar paper.jar --nogui
 
 ### Understanding the command
 
-| Part | Meaning |
+| Parameter | Purpose |
 |---|---|
 | `java` | Starts the Java runtime |
 | `-Xms512M` | Sets the initial Java heap size to 512 MB |
 | `-Xmx2G` | Sets the maximum Java heap size to 2 GB |
 | `-jar` | Executes a Java archive |
-| `paper.jar` | The downloaded PaperMC server |
-| `--nogui` | Runs without Minecraft's graphical server interface |
+| `paper.jar` | The PaperMC server application |
+| `--nogui` | Starts the server without its graphical interface |
 
-These memory values are the settings used in our initial implementation.
+These memory settings were used in our initial implementation. Actual requirements depend on the device and server workload.
 
-They are not universal recommendations. Android and other running applications also need RAM, so adjust memory settings according to actual device usage.
+### Step 4: Understanding the first startup
 
-### What happens during the first startup?
+During its first startup, PaperMC initializes the server environment and generates configuration files.
 
-PaperMC initializes its server environment and generates configuration files.
-
-On a fresh installation, it will normally stop because the Minecraft EULA has not yet been accepted.
+The server will normally stop if the Minecraft EULA has not yet been accepted.
 
 This is expected behaviour.
+
+PaperMC creates a file called:
+
+```text
+eula.txt
+```
+
+You must review the Minecraft EULA before accepting it.
+
+See the next section, **Understanding and Accepting the Minecraft EULA**, for instructions.
+
+### Step 5: Start the server after accepting the EULA
+
+After accepting the EULA, execute the startup command again:
+
+```bash
+java -Xms512M -Xmx2G -jar paper.jar --nogui
+```
+
+Wait for PaperMC to finish initializing.
+
+A successful startup normally displays a message similar to:
+
+```text
+Done (...)! For help, type "help"
+```
+
+This indicates that the server has completed its startup process.
+
+### Actual PaperMC Startup on Redmi Note 8 Pro
+
+The following screenshot shows our PaperMC server successfully starting inside Termux.
+
+![PaperMC server successfully started on Redmi Note 8 Pro](../../images/minecraft/paper-server-initial-startup.jpeg)
+
+**Observations from our implementation:**
+
+- PaperMC successfully loaded the Minecraft world.
+- The server reached the startup-complete message.
+- Spark reported an error while initializing its asynchronous native profiler.
+- The server displayed a warning about running in offline mode.
+- PaperMC indicated that a newer build was available at the time of this screenshot.
+
+These warnings did not prevent the server from completing startup. However, the Spark profiling issue and server update should be investigated separately.
+
+**Important:** Do not assume that the server is fully optimized or free of warnings just because it started successfully.
+
+Once startup is complete, the PaperMC console is ready to receive Minecraft server commands.
+
 
 ## 11. Understanding and Accepting the Minecraft EULA
 
