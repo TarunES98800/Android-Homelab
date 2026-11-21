@@ -308,42 +308,30 @@ It is based on the Bukkit/Spigot ecosystem and provides performance improvements
 
 Official website:
 
-https://papermc.io/
+[https://papermc.io/](https://papermc.io/)
 
 ### Understanding the Download API
 
-PaperMC provides an official downloads service that allows software to retrieve build information and download stable server builds.
+PaperMC provides an official downloads service for retrieving build information and downloading server JAR files.
 
-We will use its version 3 API.
+We will use its version 3 REST API and choose a build marked `STABLE`. PaperMC advises against using experimental builds for normal server use.
 
-The download process involves:
+The example below downloads a stable Paper build for Minecraft version `26.3`, matching the initial test setup documented in this project. If you use a different Minecraft version, change `MC_VERSION` to match the version you intend to host.
 
-1. Requesting builds for a Minecraft version.
-2. Finding a stable build.
-3. Retrieving its official download URL.
-4. Downloading the server JAR.
+### Step 1: Set the project and Minecraft version
 
-We will use Minecraft version `26.3`, matching the initial implementation of this project.
-
-### Step 1: Set the project and version
-
-Execute:
+Execute these commands in the Termux shell:
 
 ```bash
 PROJECT="paper"
-```
-
-Then:
-
-```bash
 MC_VERSION="26.3"
 ```
 
-These variables identify the PaperMC project and Minecraft version.
+These variables identify the PaperMC project and the Minecraft version.
 
 ### Step 2: Set a descriptive User-Agent
 
-PaperMC's download service requires requests to include a descriptive User-Agent with a contact URL or email address.
+PaperMC requires API requests to include a descriptive User-Agent that identifies the requesting software and includes a contact URL or email address.
 
 Execute:
 
@@ -351,9 +339,9 @@ Execute:
 USER_AGENT="Android-Homelab/1.0 (https://github.com/TarunES98800/Android-Homelab)"
 ```
 
-This identifies our tutorial project to the download service.
+This identifies the Android-Homelab project to the download service.
 
-### Step 3: Retrieve the available builds
+### Step 3: Retrieve build information
 
 Execute:
 
@@ -361,49 +349,58 @@ Execute:
 BUILDS_JSON=$(curl -fsSL -H "User-Agent: $USER_AGENT" "https://fill.papermc.io/v3/projects/$PROJECT/versions/$MC_VERSION/builds")
 ```
 
-This requests build information from the official PaperMC download service.
+This requests build information for the selected Minecraft version.
 
-The response contains JSON data describing available builds.
+If the command prints a curl error or leaves the variable empty, stop here. Check the internet connection, the version string and the API response before continuing.
 
-### Step 4: Extract the stable download URL
-
-Execute:
+You can inspect the returned JSON with:
 
 ```bash
-PAPER_URL=$(printf '%s\n' "$BUILDS_JSON" | jq -r 'first(.[] | select(.channel == "STABLE") | .downloads."server:default".url) // empty')
+printf '%s\\n' "$BUILDS_JSON" | jq .
 ```
 
-Let's understand the command.
+### Step 4: Find the latest stable build and its download URL
 
-- `printf` supplies the JSON response.
-- `jq` processes the JSON.
-- `select(.channel == "STABLE")` selects stable builds.
-- `.downloads."server:default".url` extracts the server download URL.
-- `first(...)` selects the first matching stable build.
-- `// empty` returns an empty result if no suitable build is found.
-
-Check the result:
+Extract the stable build ID:
 
 ```bash
-echo "$PAPER_URL"
+PAPER_BUILD=$(printf '%s\\n' "$BUILDS_JSON" | jq -r 'first(.[] | select(.channel == "STABLE") | .id) // empty')
 ```
 
-A valid result should be a PaperMC download URL.
+Extract its server download URL:
 
-If the output is empty, check whether a stable build is available for the chosen Minecraft version.
+```bash
+PAPER_URL=$(printf '%s\\n' "$BUILDS_JSON" | jq -r 'first(.[] | select(.channel == "STABLE") | .downloads."server:default".url) // empty')
+```
+
+The commands use `jq` to:
+
+- Select builds whose channel is `STABLE`.
+- Choose the first stable build returned by the API.
+- Read its build ID and default server download URL.
+- Return an empty value if no matching stable build is found.
+
+Check the selected build:
+
+```bash
+echo "Build: $PAPER_BUILD"
+echo "Download URL: $PAPER_URL"
+```
+
+If either value is empty, do not run the download command. The selected Minecraft version may not have a stable Paper build available, or the API response may have changed.
 
 ### Step 5: Download PaperMC
 
-First, make sure you are still inside:
-
-```text
-~/minecraft
-```
-
-Then execute:
+Make sure you are in the Minecraft server directory:
 
 ```bash
-curl -fL "$PAPER_URL" -o paper.jar
+cd ~/minecraft
+```
+
+Download to a temporary filename first:
+
+```bash
+curl -fL "$PAPER_URL" -o paper.jar.part && mv paper.jar.part paper.jar
 ```
 
 The options mean:
@@ -412,15 +409,12 @@ The options mean:
 |---|---|
 | `-f` | Treat HTTP error responses as failures |
 | `-L` | Follow HTTP redirects |
-| `-o` | Save the download using a specified filename |
+| `-o` | Write the download to the specified filename |
+| `&&` | Rename the temporary file only if the download succeeds |
 
-The downloaded file will be saved as:
+The temporary filename helps avoid replacing an existing `paper.jar` with an incomplete download.
 
-```text
-paper.jar
-```
-
-### Step 6: Verify the download
+### Step 6: Verify the downloaded file
 
 Execute:
 
@@ -430,12 +424,14 @@ ls -lh paper.jar
 
 This displays the downloaded file and its size.
 
-If the download did not complete successfully, do not attempt to start the server. Recheck the API response and download command.
+The file should exist and have a non-zero size. If the download failed, do not try to start the server; check the URL, the API output and the curl error first.
 
-PaperMC documentation:
+**Version note:** The API may offer newer stable builds over time. For reproducible tutorials, record the Minecraft version and Paper build ID used for a test rather than assuming that a future download will be identical.
 
-https://docs.papermc.io/misc/downloads-service/
+Official documentation:
 
+- [PaperMC Downloads Service](https://docs.papermc.io/misc/downloads-service/)
+- [PaperMC Downloads](https://papermc.io/downloads/paper)
 
 ## 10. First Server Startup
 
