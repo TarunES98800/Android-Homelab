@@ -1,139 +1,135 @@
 # Android-Homelab 📱
 
-### Turn your old Android smartphone into a low-cost homelab server.
+### Turn old Android smartphones into low-cost homelab servers.
 
-Have an unused Android smartphone lying around?
+Have an unused Android smartphone? This project explores how to repurpose it as a small, practical homelab host using Termux and compatible self-hosted applications.
 
-Instead of letting it collect dust, give it a new purpose!
+Android-Homelab is a beginner-friendly, hands-on documentation project. It records the setup, commands, configuration, security considerations and lessons learned while running services on an Android phone.
 
-**Android-Homelab** is a beginner-friendly, practical project exploring how unused Android smartphones can be repurposed as low-cost homelab servers.
-
-Using Termux, Linux command-line utilities and networking tools, this project documents how to install, configure and manage self-hosted applications directly on Android.
-
-The goal is to learn practical Linux, networking, server administration, cybersecurity fundamentals and automation using hardware you may already own.
+The goal is to learn Linux fundamentals, networking, server administration, security, backups and automation using hardware that may already be available.
 
 ---
 
-## 🎯 Project Objectives
+## Project goals
 
-- Repurpose unused Android smartphones into useful servers.
-- Learn Linux fundamentals using Termux.
-- Understand networking, IP addresses, ports and protocols.
-- Host multiple self-hosted applications.
-- Configure remote access using private networking.
-- Learn server security, backups and automation.
-- Create reproducible tutorials for beginners.
+- Repurpose unused Android smartphones for useful server experiments.
+- Learn Linux command-line fundamentals with Termux.
+- Understand IP addresses, ports, TCP and remote connectivity.
+- Host more than one type of self-hosted application over time.
+- Practise access control, backups and troubleshooting.
+- Publish repeatable, beginner-friendly tutorials based on tested work.
 
-## 🖥️ What Are We Building?
-
-The first implementation uses an Android smartphone to host a Minecraft Java server.
-
-The project will gradually expand to support additional applications.
+## Current applications
 
 | Application | Purpose | Status |
 |---|---|---|
-| Minecraft Server | Host a multiplayer Minecraft Java server | First implementation |
-| File Server | Share files over a network | Planned |
-| Web Server | Host websites and web applications | Planned |
-| Other Services | Experiment with additional self-hosted applications | Planned |
+| [Minecraft Java server](applications/minecraft-server/README.md) | Host a small multiplayer Minecraft Java server with PaperMC | Implemented and documented |
+| File server | Share files over a private network | Planned |
+| Web server | Host websites or web applications | Planned |
 
-## 🧰 Technologies Used
+The Minecraft server is the first implementation. The file and web server entries are planned work, not completed services.
 
-| Technology | Purpose |
-|---|---|
-| Termux | Command-line environment on Android |
-| Java | Runtime for Java-based applications |
-| PaperMC | Minecraft Java server |
-| tmux | Manage persistent terminal sessions |
-| Tailscale | Private remote network connectivity |
-| Linux utilities | File management and server administration |
+## Initial test device
 
-## 📱 Initial Test Device
-
-The first implementation uses a Redmi Note 8 Pro.
+The first implementation was carried out on a Redmi Note 8 Pro.
 
 | Component | Specification |
 |---|---|
 | Device | Redmi Note 8 Pro |
 | Processor | MediaTek Helio G90T |
 | Physical RAM | 6 GB |
-| Storage | 128 GB |
-| Operating System | Android 11 |
+| Internal storage | 128 GB |
+| Android version | Android 11 |
+| Termux architecture reported by uname | aarch64 |
+| Java observed in Termux | OpenJDK 25.0.5.1 |
 
-These specifications describe the initial test device, not minimum requirements for every application.
+These are the specifications and software versions observed on the test device. They are not minimum requirements or a performance guarantee for other phones.
 
-## 📚 Documentation
-- [System Architecture](docs/architecture.md)
-Follow the tutorials in the suggested order.
+## Technologies
 
-### Getting Started
+| Technology | Role |
+|---|---|
+| Termux | Android terminal and Linux-like user-space environment |
+| OpenJDK | Java runtime for PaperMC |
+| PaperMC | Minecraft Java server implementation |
+| tmux | Manage the server terminal session |
+| Tailscale | Private remote network connectivity |
+| Termux/Linux utilities | File management, downloads and administration |
+
+## Documentation
+
+### Foundations
 
 1. [Introduction to Android Homelabs](docs/introduction.md)
 2. [Hardware Requirements](docs/hardware-requirements.md)
 3. [Installing Termux](docs/termux-installation.md)
-
-### Linux and Networking Fundamentals
-
 4. [Linux Command-Line Fundamentals](docs/termux-basics.md)
 5. [Networking Fundamentals](docs/networking-basics.md)
+6. [System Architecture](docs/architecture.md)
 
-### Managing Your Homelab
+### Operating the homelab
 
-6. [Remote Access Using Tailscale](docs/remote-access.md)
-7. [Backups and Recovery](docs/backups-and-recovery.md)
-8. [Troubleshooting](docs/troubleshooting.md)
+7. [Remote Access with Tailscale](docs/remote-access.md)
+8. [Security Best Practices](docs/security.md)
+9. [Backups and Recovery](docs/backups-and-recovery.md)
+10. [General Troubleshooting](docs/troubleshooting.md)
 
-More security and application-specific guides will be added as the project develops.
+### Minecraft application guide
 
-## 🔐 Security Considerations
+- [Minecraft server overview](applications/minecraft-server/README.md)
+- [Installation](applications/minecraft-server/installation.md)
+- [Configuration](applications/minecraft-server/configuration.md)
+- [Troubleshooting](applications/minecraft-server/troubleshooting.md)
 
-- Avoid exposing services directly to the public internet without understanding the risks.
-- Use trusted remote-access methods.
-- Protect credentials and private configuration files.
-- Use application-level authentication wherever supported.
-- Maintain backups outside the Android device.
-- Review security settings before making services accessible to other users.
+## Implementation screenshots
 
-## ⚠️ Important Limitations
+These screenshots document the actual test setup:
 
-- Android is not replaced with a conventional Linux server operating system.
-- Termux provides a Linux-like user-space environment within Android.
-- Android background restrictions can interrupt long-running applications.
-- Thermal throttling may affect sustained performance.
-- Not every Linux application is compatible with Android.
-- Performance depends on the phone's hardware and the applications being hosted.
+![OpenJDK version and Android architecture in Termux](images/termux/java-version.jpeg)
 
-This project is intended primarily for learning and experimentation.
+![PaperMC initial server startup](images/minecraft/paper-server-initial-startup.jpeg)
 
-## 🗺️ Future Roadmap
+![Minecraft gameplay](images/minecraft/minecraft-gameplay.jpeg)
 
-- [x] Create the project repository.
-- [x] Document the Android homelab fundamentals.
-- [x] Document the initial Minecraft server setup concepts.
-- [ ] Complete the security documentation.
-- [ ] Create a dedicated Minecraft server tutorial.
-- [ ] Add a file server tutorial.
-- [ ] Add a web server tutorial.
-- [ ] Develop server automation scripts.
+![Tailscale TCP connection test](images/networking/tailscale-connection-result.png)
+
+The initial PaperMC startup screenshot includes warnings described in the installation guide. It is evidence that the server reached its startup-complete message, not a claim that every warning has been resolved.
+
+## Security notes
+
+The initial Minecraft experiment used offline mode for the launchers used during testing. Offline mode does not reliably authenticate player identities. A whitelist does not solve that identity-verification problem.
+
+Keep that experimental server private and limited to trusted participants. Prefer normal Minecraft account authentication for a server that needs reliable identity verification. Read the [security guide](docs/security.md) before exposing any service to other devices.
+
+Never commit passwords, tokens, private keys, private server backups or personal network details to this public repository.
+
+## Limitations
+
+- Termux provides a Linux-like user-space environment inside Android; it does not replace Android with a conventional Linux server operating system.
+- Android background-management policies may stop or restrict long-running processes.
+- Sustained workloads can cause thermal throttling.
+- Android and other applications share the phone's RAM and CPU.
+- Compatibility and performance vary by phone, Android version and application.
+
+This project is intended for learning and small-scale experimentation, not as a guaranteed replacement for production server infrastructure.
+
+## Roadmap
+
+- [x] Create the public repository and add a license.
+- [x] Document Android homelab foundations.
+- [x] Document the first Minecraft Java server implementation.
+- [x] Add implementation screenshots and an architecture diagram.
+- [ ] Review and test all tutorials from a clean setup.
+- [ ] Add more tested screenshots and command output.
+- [ ] Build and document a file server.
+- [ ] Build and document a web server.
+- [ ] Add reusable server-management and backup scripts.
 - [ ] Explore monitoring and performance measurement.
-- [ ] Add architecture diagrams and practical screenshots.
 
-## 🤝 Contributions
+## Contributing
 
-Suggestions, corrections, documentation improvements and additional application tutorials are welcome.
+Corrections, suggestions and additional application tutorials are welcome. Please open an issue to discuss a substantial change or submit a pull request with a clear description.
 
-Feel free to open an issue or submit a pull request.
+## License
 
-## 📌 Project Status
-
-This is an ongoing learning and documentation project.
-
-The tutorials are being developed from practical experimentation with Android smartphones, Termux and self-hosted applications.
-
-The long-term goal is to create a useful reference for anyone interested in building a low-cost homelab using old Android devices.
-
-**Let's give old smartphones a new purpose!** 🚀
-
----
-
-Licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
