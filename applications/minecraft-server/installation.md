@@ -72,6 +72,8 @@ We need:
 - curl for downloading files.
 - jq for processing JSON responses.
 - tmux for managing the server session.
+- nano for editing configuration files.
+- coreutils for commands such as `sha256sum`.
 
 We will install the required command-line tools using Termux's package manager.
 
@@ -195,11 +197,13 @@ Official references:
 
 ## 7. Installing the Required Utilities
 
-We need three additional tools:
+We need several additional command-line tools:
 
 - curl: Downloads files from the internet.
 - jq: Processes JSON data.
 - tmux: Manages terminal sessions.
+- nano: Edits configuration files.
+- coreutils: Provides standard utilities, including `sha256sum` for verifying the downloaded JAR.
 
 Execute:
 
