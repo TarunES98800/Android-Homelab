@@ -436,10 +436,6 @@ Possible causes include:
 
 This command tests TCP connectivity. It does not verify Minecraft authentication or prove that the player can successfully join the game.
 
-## 13. Understanding the Connection Flow
-
-The complete architecture looks like this:
-
 ### Actual Tailscale Connection Test
 
 The following screenshot demonstrates a successful TCP connectivity test from a remote Windows device to the Android homelab server through Tailscale.
@@ -447,6 +443,10 @@ The following screenshot demonstrates a successful TCP connectivity test from a 
 ![Successful Tailscale TCP connection test](../images/networking/tailscale-connection-test.png)
 
 The `TcpTestSucceeded` result confirms that the remote device could establish a TCP connection to the Minecraft server port.
+
+## 13. Understanding the Connection Flow
+
+The complete architecture looks like this:
 
 ```mermaid
 flowchart TD
