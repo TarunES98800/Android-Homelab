@@ -440,6 +440,14 @@ This command tests TCP connectivity. It does not verify Minecraft authentication
 
 The complete architecture looks like this:
 
+### Actual Tailscale Connection Test
+
+The following screenshot demonstrates a successful TCP connectivity test from a remote Windows device to the Android homelab server through Tailscale.
+
+![Successful Tailscale TCP connection test](../images/networking/tailscale-connection-test.png)
+
+The `TcpTestSucceeded` result confirms that the remote device could establish a TCP connection to the Minecraft server port.
+
 ```mermaid
 flowchart TD
     A["Friend's Windows Laptop"] --> B["Tailscale Client"]
