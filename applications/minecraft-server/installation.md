@@ -768,40 +768,104 @@ du -sh ~/minecraft
 
 The actual size depends on the world and the generated server data.
 
+
 ## 15. Testing the Initial Server
 
-The next step is confirming that another Minecraft client can reach the server.
+After starting PaperMC successfully, the next step is to verify that another Minecraft client can connect to the Android-hosted server.
 
-For the local network:
+We will first test connectivity over the local Wi-Fi network.
 
-1. Connect the Android phone and client computer to the same Wi-Fi network.
-2. Find the Android phone's local IPv4 address in Android Wi-Fi settings.
-3. Confirm that PaperMC is running.
-4. Open Minecraft Java Edition on the client.
-5. Select Multiplayer.
-6. Add a server using the Android phone's local IP and port.
+### Step 1: Connect Both Devices to the Same Wi-Fi
 
-The default Minecraft Java server address structure is:
+Connect the Android smartphone hosting PaperMC and the Minecraft client computer to the same Wi-Fi network.
+
+### Step 2: Find the Android Phone's Local IP Address
+
+On Android:
+
+1. Open Settings.
+2. Navigate to Wi-Fi.
+3. Open the connected network details.
+4. Find the phone's IPv4 address.
+
+For example:
+
+```text
+192.168.1.15
+```
+
+This is an illustrative address. Use your actual phone's local IP address.
+
+### Step 3: Connect from Minecraft Java Edition
+
+On the computer:
+
+1. Open Minecraft Java Edition.
+2. Select Multiplayer.
+3. Select Add Server.
+4. Enter a server name.
+5. Enter the Android phone's local IP address and port.
+
+The connection address follows this format:
 
 ```text
 ANDROID_LOCAL_IP:25565
 ```
 
-For example:
+6. Save the server entry.
+7. Select Join Server.
 
-```text
-192.168.1.15:25565
+Make sure the client uses a Minecraft version compatible with the server.
+
+### Step 4: Verify the Connection
+
+If the connection succeeds, the player should enter the world hosted on the Android smartphone.
+
+Check that:
+
+- The player can join the world.
+- The world loads successfully.
+- The player can move and interact with the environment.
+- The PaperMC console shows the player connection.
+
+### Actual Minecraft Gameplay
+
+The following screenshot demonstrates the Minecraft world running on our Android-hosted PaperMC server.
+
+![Minecraft gameplay on Android-hosted PaperMC server](../../images/minecraft/minecraft-gameplay.jpeg)
+
+This screenshot provides visual evidence of the gameplay stage of the implementation.
+
+### Step 5: Test the TCP Connection
+
+We can also test the Minecraft server port from Windows PowerShell.
+
+Execute:
+
+```powershell
+Test-NetConnection ANDROID_LOCAL_IP -Port 25565
 ```
 
-This is an illustrative address.
+Replace `ANDROID_LOCAL_IP` with the actual local IP address of the Android smartphone.
 
-The client must use a compatible Minecraft version.
+Look for:
 
-If the connection fails, first verify the server and network before changing authentication or other unrelated settings.
+```text
+TcpTestSucceeded : True
+```
 
-See:
+A value of `True` confirms that a TCP connection to the specified server address and port succeeded.
 
-[Networking Fundamentals](../../docs/networking-basics.md)
+It does not independently verify Minecraft authentication or successful gameplay.
+
+### Remote Connectivity
+
+To connect from another location, use the Android device's Tailscale IP address instead of its local Wi-Fi IP address.
+
+Remote access is documented separately in:
+
+[Remote Access Using Tailscale](../../docs/remote-access.md)
+
 
 ## 16. Common Installation Problems
 
