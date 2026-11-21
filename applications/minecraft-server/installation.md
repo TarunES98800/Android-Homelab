@@ -152,6 +152,7 @@ Wait for the installation to finish.
 
 If the package is unavailable, check the configured Termux repositories and the official Termux package documentation rather than downloading an unofficial Java APK.
 
+
 ### Step 3: Verify Java installation
 
 Execute:
@@ -169,8 +170,9 @@ openjdk version "25..."
 ```
 
 The exact patch version can change as updates are released.
-```markdown
+
 ![Java version and architecture](../../images/termux/java-version.jpg)
+
 ### Why do we need Java?
 
 PaperMC is distributed as an executable Java archive.
