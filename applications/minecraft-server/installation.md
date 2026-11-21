@@ -204,7 +204,7 @@ We need three additional tools:
 Execute:
 
 ```bash
-pkg install curl jq tmux nano
+pkg install curl jq tmux nano coreutils
 ```
 
 Let's understand their purposes.
@@ -215,6 +215,7 @@ Let's understand their purposes.
 | jq | Extracts information from JSON responses |
 | tmux | Keeps server sessions manageable |
 | nano | Edits configuration files |
+| coreutils | Provides tools such as `sha256sum` for download verification |
 
 Check that curl is installed:
 
@@ -373,11 +374,17 @@ Extract its server download URL:
 PAPER_URL=$(printf '%s\n' "$BUILDS_JSON" | jq -r 'first(.[] | select(.channel == "STABLE") | .downloads."server:default".url) // empty')
 ```
 
+Extract the SHA-256 checksum supplied for the same build:
+
+```bash
+PAPER_SHA256=$(printf '%s\n' "$BUILDS_JSON" | jq -r 'first(.[] | select(.channel == "STABLE") | .downloads."server:default".checksums.sha256) // empty')
+```
+
 The commands use `jq` to:
 
 - Select builds whose channel is `STABLE`.
 - Choose the first stable build returned by the API.
-- Read its build ID and default server download URL.
+- Read its build ID, download URL and SHA-256 checksum.
 - Return an empty value if no matching stable build is found.
 
 Check the selected build:
@@ -385,11 +392,12 @@ Check the selected build:
 ```bash
 echo "Build: $PAPER_BUILD"
 echo "Download URL: $PAPER_URL"
+echo "SHA-256: $PAPER_SHA256"
 ```
 
-If either value is empty, do not run the download command. The selected Minecraft version may not have a stable Paper build available, or the API response may have changed.
+If any value is empty, do not run the download command. The selected Minecraft version may not have a stable Paper build available, or the API response may have changed.
 
-### Step 5: Download PaperMC
+### Step 5: Download and verify PaperMC
 
 Make sure you are in the Minecraft server directory:
 
@@ -397,24 +405,39 @@ Make sure you are in the Minecraft server directory:
 cd ~/minecraft
 ```
 
-Download to a temporary filename first:
+Download to a temporary filename:
 
 ```bash
-curl -fL "$PAPER_URL" -o paper.jar.part && mv paper.jar.part paper.jar
+curl -fL "$PAPER_URL" -o paper.jar.part
 ```
 
-The options mean:
+Verify the downloaded file against the checksum supplied by PaperMC:
 
-| Option | Purpose |
-|---|---|
-| `-f` | Treat HTTP error responses as failures |
-| `-L` | Follow HTTP redirects |
-| `-o` | Write the download to the specified filename |
-| `&&` | Rename the temporary file only if the download succeeds |
+```bash
+printf '%s  %s\n' "$PAPER_SHA256" "paper.jar.part" | sha256sum -c -
+```
 
-The temporary filename helps avoid replacing an existing `paper.jar` with an incomplete download.
+The expected successful output ends with:
 
-### Step 6: Verify the downloaded file
+```text
+paper.jar.part: OK
+```
+
+Only after the checksum passes, move the verified file into place:
+
+```bash
+mv paper.jar.part paper.jar
+```
+
+If checksum verification fails, do not start the downloaded file. Remove the temporary file and download it again:
+
+```bash
+rm -f paper.jar.part
+```
+
+The checksum helps detect an incomplete or altered download. It does not replace downloading from PaperMC's official service over HTTPS.
+
+### Step 6: Confirm the server JAR
 
 Execute:
 
@@ -422,9 +445,9 @@ Execute:
 ls -lh paper.jar
 ```
 
-This displays the downloaded file and its size.
+This displays the verified server file and its size.
 
-The file should exist and have a non-zero size. If the download failed, do not try to start the server; check the URL, the API output and the curl error first.
+If the file is missing, return to the download and checksum steps before attempting to start the server.
 
 **Version note:** The API may offer newer stable builds over time. For reproducible tutorials, record the Minecraft version and Paper build ID used for a test rather than assuming that a future download will be identical.
 
