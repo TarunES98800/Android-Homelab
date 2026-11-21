@@ -130,6 +130,14 @@ This project is intended for learning and small-scale experimentation, not as a 
 
 Corrections, suggestions and additional application tutorials are welcome. Please open an issue to discuss a substantial change or submit a pull request with a clear description.
 
+Before submitting documentation changes, run the local checks:
+
+```bash
+python scripts/check_docs.py
+```
+
+GitHub Actions runs the same check on pushes and pull requests. It checks local Markdown links and fenced code blocks; it does not verify external websites or prove that commands work on a physical Android device.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
