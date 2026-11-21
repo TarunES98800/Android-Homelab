@@ -356,7 +356,7 @@ If the command prints a curl error or leaves the variable empty, stop here. Chec
 You can inspect the returned JSON with:
 
 ```bash
-printf '%s\\n' "$BUILDS_JSON" | jq .
+printf '%s\n' "$BUILDS_JSON" | jq .
 ```
 
 ### Step 4: Find the latest stable build and its download URL
@@ -364,13 +364,13 @@ printf '%s\\n' "$BUILDS_JSON" | jq .
 Extract the stable build ID:
 
 ```bash
-PAPER_BUILD=$(printf '%s\\n' "$BUILDS_JSON" | jq -r 'first(.[] | select(.channel == "STABLE") | .id) // empty')
+PAPER_BUILD=$(printf '%s\n' "$BUILDS_JSON" | jq -r 'first(.[] | select(.channel == "STABLE") | .id) // empty')
 ```
 
 Extract its server download URL:
 
 ```bash
-PAPER_URL=$(printf '%s\\n' "$BUILDS_JSON" | jq -r 'first(.[] | select(.channel == "STABLE") | .downloads."server:default".url) // empty')
+PAPER_URL=$(printf '%s\n' "$BUILDS_JSON" | jq -r 'first(.[] | select(.channel == "STABLE") | .downloads."server:default".url) // empty')
 ```
 
 The commands use `jq` to:
