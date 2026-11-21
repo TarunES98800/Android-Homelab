@@ -32,11 +32,13 @@ def check_fences(path: Path, text: str) -> list[str]:
             continue
 
         open_char, open_length, open_line = opening
-        if marker_char == open_char and marker_length >= open_length:
+        if (
+            marker_char == open_char
+            and marker_length >= open_length
+            and match.group(2).strip() == ""
+        ):
             # A closing fence may contain only trailing whitespace.
-            remainder = line[match.end():]
-            if remainder.strip() == "":
-                opening = None
+            opening = None
 
     if opening is not None:
         marker_char, marker_length, line_number = opening
