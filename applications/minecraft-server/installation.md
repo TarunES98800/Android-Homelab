@@ -560,7 +560,13 @@ A successful startup normally displays a message similar to:
 
 ```text
 Done (...)! For help, type "help"
-```
+```markdown
+### Actual PaperMC Startup
+
+The following screenshot shows PaperMC successfully starting
+on our Redmi Note 8 Pro.
+
+![Initial PaperMC server startup](../../images/minecraft/paper-server-initial-startup.jpeg)
 
 The exact timing and additional console output will vary.
 
