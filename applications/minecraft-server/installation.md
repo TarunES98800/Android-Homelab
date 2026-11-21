@@ -401,6 +401,16 @@ echo "SHA-256: $PAPER_SHA256"
 
 If any value is empty, do not run the download command. The selected Minecraft version may not have a stable Paper build available, or the API response may have changed.
 
+You can also check the three values together:
+
+```bash
+if [ -z "$PAPER_BUILD" ] || [ -z "$PAPER_URL" ] || [ -z "$PAPER_SHA256" ]; then
+  echo "A stable build, download URL or checksum is missing. Stop and inspect the API response."
+else
+  echo "Stable build metadata is present for build $PAPER_BUILD."
+fi
+```
+
 ### Step 5: Download and verify PaperMC
 
 Make sure you are in the Minecraft server directory:
@@ -412,7 +422,7 @@ cd ~/minecraft
 Download to a temporary filename:
 
 ```bash
-curl -fL "$PAPER_URL" -o paper.jar.part
+curl -fL -H "User-Agent: $USER_AGENT" "$PAPER_URL" -o paper.jar.part
 ```
 
 Verify the downloaded file against the checksum supplied by PaperMC:
