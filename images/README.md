@@ -1,35 +1,23 @@
 # Project Images and Screenshots
 
-This directory contains screenshots, diagrams and visual evidence used throughout the Android-Homelab documentation.
+This directory contains screenshots from the Android-Homelab implementation. They provide visual evidence for the setup and are embedded in the relevant tutorials.
 
-The purpose of these images is to help readers understand the installation process, server configuration and results of each implementation.
+## Current files
 
-## Directory Structure
+| Directory | File | Description |
+|---|---|---|
+| `termux/` | `java-version.jpeg` | OpenJDK version and architecture reported by Termux |
+| `minecraft/` | `paper-server-initial-startup.jpeg` | Initial PaperMC startup log on the Redmi Note 8 Pro |
+| `minecraft/` | `minecraft-gameplay.jpeg` | Minecraft gameplay connected to the Android-hosted server |
+| `networking/` | `tailscale-connection-result.png` | Windows TCP connectivity test to port 25565 over Tailscale |
 
-| Directory | Contents |
-|---|---|
-| `termux/` | Termux installation and command-line screenshots |
-| `minecraft/` | PaperMC console and Minecraft gameplay screenshots |
-| `networking/` | Local and remote connectivity evidence |
-| `architecture/` | System architecture diagrams |
+The system architecture diagrams are maintained as Mermaid source in [docs/architecture.md](../docs/architecture.md), rather than as exported image files.
 
-## Image Guidelines
+## Image guidelines
 
-- Use screenshots from actual implementations wherever possible.
-- Make sure terminal commands and important output are readable.
-- Hide passwords, authentication tokens, email addresses and private IP information.
-- Avoid uploading private server configurations or world backups.
-- Use descriptive filenames.
-- Include screenshots close to the relevant instructions in the documentation.
-
-## Screenshot Naming Convention
-
-Examples:
-
-- `termux-installation.png`
-- `java-version.png`
-- `paper-server-running.png`
-- `minecraft-gameplay.png`
-- `tailscale-connection-test.png`
-
-All screenshots should demonstrate actual project implementation rather than unrelated illustrative examples.
+- Prefer screenshots from actual project tests.
+- Keep commands and relevant output readable.
+- Hide passwords, authentication tokens, email addresses, private IP addresses and other information that should not be public.
+- Do not upload private server configurations, world backups or credentials.
+- Use descriptive filenames and link each image from the relevant tutorial.
+- Label screenshots accurately; a successful startup message does not imply that every warning has been resolved.
