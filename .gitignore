@@ -26,6 +26,12 @@
 *.zip
 *.bak
 
+# Local databases and database dumps
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+
 # Logs and temporary files
 *.log
 *.tmp
